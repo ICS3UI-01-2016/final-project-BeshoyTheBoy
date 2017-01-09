@@ -28,8 +28,13 @@ public class DTN_1 extends JComponent{
     Color floorColor = new Color(204, 204, 204);
     
     //Create Main Player
-    Rectangle player = new Rectangle(400, 500, 35, 55);
+    Rectangle player = new Rectangle(382, 500, 35, 55);
     
+    //Create Niners
+    Rectangle[] niners = new Rectangle[4];
+    
+    //Create Hallway
+    Rectangle hallway = new Rectangle(300, 600, 300, 600);
  
     
     // drawing of the game happens in here
@@ -42,10 +47,10 @@ public class DTN_1 extends JComponent{
         g.clearRect(0, 0, WIDTH, HEIGHT);
         
         // GAME DRAWING GOES HERE 
-        
+
         //Create background
-            //Change colour to custom colour
-            g.setColor(floorColor);
+            //Change colour
+            g.setColor(Color.lightGray);
             //Create background
             g.fillRect(0, 0, WIDTH, HEIGHT);
         
@@ -54,6 +59,16 @@ public class DTN_1 extends JComponent{
             g.setColor(Color.BLUE);
             //draw rect
             g.fillRect(player.x, player.y, player.width, player.height);
+                        
+        //Create hallway
+            //set colour
+            g.setColor(Color.black);
+            //draw line
+            g.drawLine(200, 0, 200, 600);
+            //set colour
+            g.setColor(Color.black);
+            //draw line
+            g.drawLine(600, 0, 600, 600);
             
         // GAME DRAWING ENDS HERE
     }
