@@ -36,6 +36,9 @@ public class DTN_1 extends JComponent{
     //Create Hallway
     Rectangle hallway = new Rectangle(300, 600, 300, 600);
  
+    //SETUP Niner Variables
+    //Space between each niner
+    int ninerSpacing = 
     
     // drawing of the game happens in here
     // we use the Graphics object, g, to perform the drawing
