@@ -1,6 +1,8 @@
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -12,7 +14,7 @@ import javax.swing.JFrame;
 
 public class DTN_1 extends JComponent{
 
-    // Height and Width of our game
+     // Height and Width of our game
     static final int WIDTH = 800;
     static final int HEIGHT = 600;
     
@@ -21,7 +23,14 @@ public class DTN_1 extends JComponent{
     long desiredFPS = 60;
     long desiredTime = (1000)/desiredFPS;
     
-
+    // GAME VARIABLES
+    // Create a custom color for background/floor
+    Color floorColor = new Color(204, 204, 204);
+    
+    //Create Main Player
+    Rectangle player = new Rectangle(400, 500, 35, 55);
+    
+ 
     
     // drawing of the game happens in here
     // we use the Graphics object, g, to perform the drawing
@@ -34,7 +43,18 @@ public class DTN_1 extends JComponent{
         
         // GAME DRAWING GOES HERE 
         
+        //Create background
+            //Change colour to custom colour
+            g.setColor(floorColor);
+            //Create background
+            g.fillRect(0, 0, WIDTH, HEIGHT);
         
+        //Create Main Character
+            //Set the colour
+            g.setColor(Color.BLUE);
+            //draw rect
+            g.fillRect(player.x, player.y, player.width, player.height);
+            
         // GAME DRAWING ENDS HERE
     }
     
