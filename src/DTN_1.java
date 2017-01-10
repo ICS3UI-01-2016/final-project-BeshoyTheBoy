@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Random;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -30,7 +31,7 @@ public class DTN_1 extends JComponent{
     //Create Main Player
     Rectangle player = new Rectangle(382, 500, 35, 55);
     
-    //Create Niners
+    //Create 4 niners in 1 array (row)
     Rectangle[] niners = new Rectangle[4];
     
     //Create Hallway
@@ -38,7 +39,13 @@ public class DTN_1 extends JComponent{
  
     //SETUP Niner Variables
     //Space between each niner
-    int ninerSpacing = 
+    int ninerGap = 25;
+    //Width of niner
+    int ninerWidth = 35;
+    //Height of niner
+    int ninerHeight = 45;
+    //Minimum distance from hallway walls
+    int minDistance = 600 - ninerWidth;
     
     // drawing of the game happens in here
     // we use the Graphics object, g, to perform the drawing
@@ -86,6 +93,7 @@ public class DTN_1 extends JComponent{
         long startTime;
         long deltaTime;
         
+       
         // the main game loop section
         // game will end if you set done = false;
         boolean done = false; 
@@ -98,11 +106,12 @@ public class DTN_1 extends JComponent{
             // GAME LOGIC STARTS HERE 
             
             
+            
 
             // GAME LOGIC ENDS HERE 
             
             // update the drawing (calls paintComponent)
-            repaint();
+            ;repaint();
             
             
             
