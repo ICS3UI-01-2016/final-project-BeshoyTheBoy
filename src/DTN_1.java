@@ -86,6 +86,13 @@ public class DTN_1 extends JComponent{
     
     // The main game loop
     // In here is where all the logic for my game will go
+   
+    //SETUP the Niners
+    int ninerX = 200;
+    
+    
+    
+    
     public void run()
     {
         // Used to keep track of time used to draw and update the game
