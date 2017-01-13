@@ -13,7 +13,7 @@ import javax.swing.JFrame;
  *
  * @author awadb3223
  */
-public class DTN_1 extends JComponent implements KeyListener{
+public class DTN_1 extends JComponent implements KeyListener {
 
     // Height and Width of our game
     static final int WIDTH = 800;
@@ -75,12 +75,12 @@ public class DTN_1 extends JComponent implements KeyListener{
         g.setColor(Color.black);
         //draw line
         g.drawLine(600, 0, 600, 600);
-        
+
         //Create niners
         g.setColor(Color.red);
         //Fill rectangle
-        
-                
+
+
 
         // GAME DRAWING ENDS HERE
     }
@@ -96,11 +96,11 @@ public class DTN_1 extends JComponent implements KeyListener{
 
         //SETUP the Niners
         int ninerX = 201;
-           
+
         for (int i = 0; i < niners.length; i++) {
             ninerX = (ninerX + ninerWidth) + ninerWidth;
         }
-       
+
 
         // the main game loop section
         // game will end if you set done = false;
@@ -111,10 +111,27 @@ public class DTN_1 extends JComponent implements KeyListener{
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
 
+            //MAIN PLAYER MOVEMENTS
+            if (left) {
+                player.x = player.x - 3;
+            }
+            if (right) {
+                player.x = player.x + 3;
+            }
+
+            //Make Player stay inside Hallway
+            if(player.x + player.width >= 600 ){
+               player.x = 600 - player.width; 
+            }
+            
+            if(player.x <= 200){
+                player.x = 200;
+            }
             // GAME LOGIC ENDS HERE 
 
+
             // update the drawing (calls paintComponent)
-            ;
+
             repaint();
 
 
@@ -161,7 +178,6 @@ public class DTN_1 extends JComponent implements KeyListener{
         game.run();
     }
 
-
     @Override
     public void keyTyped(KeyEvent e) {
     }
@@ -170,13 +186,22 @@ public class DTN_1 extends JComponent implements KeyListener{
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_LEFT) {
+            left = true;
+        }
+        if (key == KeyEvent.VK_RIGHT) {
+            right = true;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_RIGHT) {
+        if (key == KeyEvent.VK_LEFT) {
+            left = false;
         }
+        if (key == KeyEvent.VK_RIGHT) {
+            right = false;
+        }
+
     }
 }
