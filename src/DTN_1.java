@@ -31,6 +31,7 @@ public class DTN_1 extends JComponent implements KeyListener {
     Rectangle[] niners = new Rectangle[5];
     //Create Hallway
     Rectangle hallway = new Rectangle(300, 600, 300, 600);
+
     //SETUP Niner Variables
     //Space between each niner
     int ninerGap = 25;
@@ -40,6 +41,7 @@ public class DTN_1 extends JComponent implements KeyListener {
     int ninerHeight = 45;
     //Minimum distance from hallway walls
     int minDistance = 600 - ninerWidth;
+    
     //Create control booleans
     boolean left = false;
     boolean right = false;
@@ -78,9 +80,19 @@ public class DTN_1 extends JComponent implements KeyListener {
 
         //Create niners
         g.setColor(Color.red);
-        //Fill rectangle
-
-
+        
+        //create a random spot in order to take out a spot in the 5 squares
+        int spot = (int)(Math.random()*5);
+        //create an X variable to create the first niner
+        int startX = 205;
+        //create for loop to generate niners
+        for (int i = 0; i < niners.length; i++) {
+            //if i does not equal the random spot
+            if (i !=spot){
+               startX = startX +(ninerWidth + ninerGap)*i;
+               g.fillRect(startX, 150, ninerWidth, ninerHeight);
+            }
+        }
 
         // GAME DRAWING ENDS HERE
     }
