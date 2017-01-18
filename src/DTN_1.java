@@ -40,6 +40,8 @@ public class DTN_1 extends JComponent implements KeyListener {
     int ninerHeight = 45;
     //Minimum distance from hallway walls
     int minDistance = 600 - ninerWidth;
+    //Speed of Game
+    int speed = 2;
     //Create control booleans
     boolean left = false;
     boolean right = false;
@@ -134,6 +136,11 @@ public class DTN_1 extends JComponent implements KeyListener {
 
             if (player.x <= 200) {
                 player.x = 200;
+            }
+            
+            //Make level scroll by duping niners and moving them down
+            for (int i = 0; i < niners.length; i++) {
+                niners[i].y = niners[i].y + speed;
             }
             // GAME LOGIC ENDS HERE 
 
