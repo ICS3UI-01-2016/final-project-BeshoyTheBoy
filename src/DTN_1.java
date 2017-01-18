@@ -28,10 +28,9 @@ public class DTN_1 extends JComponent implements KeyListener {
     //Create Main Player
     Rectangle player = new Rectangle(382, 500, 35, 55);
     //Create 4 niners in 1 array (row)
-    Rectangle[] niners = new Rectangle[5];
+    Rectangle[] niners = new Rectangle[7];
     //Create Hallway
     Rectangle hallway = new Rectangle(300, 600, 300, 600);
-
     //SETUP Niner Variables
     //Space between each niner
     int ninerGap = 25;
@@ -41,10 +40,11 @@ public class DTN_1 extends JComponent implements KeyListener {
     int ninerHeight = 45;
     //Minimum distance from hallway walls
     int minDistance = 600 - ninerWidth;
-    
     //Create control booleans
     boolean left = false;
     boolean right = false;
+    //create a random spot in order to take out a spot in the 5 squares
+    int spot = (int) (Math.random() * 7);
 
     // drawing of the game happens in here
     // we use the Graphics object, g, to perform the drawing
@@ -80,19 +80,13 @@ public class DTN_1 extends JComponent implements KeyListener {
 
         //Create niners
         g.setColor(Color.red);
-        
-        //create a random spot in order to take out a spot in the 5 squares
-        int spot = (int)(Math.random()*5);
-        //create an X variable to create the first niner
-        int startX = 205;
         //create for loop to generate niners
         for (int i = 0; i < niners.length; i++) {
-            //if i does not equal the random spot
-            if (i !=spot){
-               startX = startX +(ninerWidth + ninerGap)*i;
-               g.fillRect(startX, 150, ninerWidth, ninerHeight);
+            if (i != spot) {
+                g.fillRect(niners[i].x, niners[i].y, ninerWidth, ninerHeight);
             }
         }
+
 
         // GAME DRAWING ENDS HERE
     }
@@ -106,13 +100,15 @@ public class DTN_1 extends JComponent implements KeyListener {
         long deltaTime;
 
 
-        //SETUP the Niners
-        int ninerX = 201;
 
+        //create an X variable to create the first niner
+        int startX = 201;
+
+        //create for loop to generate niners
         for (int i = 0; i < niners.length; i++) {
-            ninerX = (ninerX + ninerWidth) + ninerWidth;
+            startX = 201 + (ninerWidth + ninerGap) * i;
+            niners[i] = new Rectangle(startX, 150, ninerWidth, ninerHeight);
         }
-
 
         // the main game loop section
         // game will end if you set done = false;
@@ -132,11 +128,11 @@ public class DTN_1 extends JComponent implements KeyListener {
             }
 
             //Make Player stay inside Hallway
-            if(player.x + player.width >= 600 ){
-               player.x = 600 - player.width; 
+            if (player.x + player.width >= 600) {
+                player.x = 600 - player.width;
             }
-            
-            if(player.x <= 200){
+
+            if (player.x <= 200) {
                 player.x = 200;
             }
             // GAME LOGIC ENDS HERE 
