@@ -6,7 +6,10 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Random;
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -30,6 +33,8 @@ public class DTN_1 extends JComponent implements KeyListener {
     Rectangle player = new Rectangle(382, 500, 35, 55);
     //Create 4 niners in 1 array (row)
     Rectangle[] niners = new Rectangle[7];
+    //Create a vertical array to store niner arrays
+    Rectangle[] niners2 = new Rectangle[7];
     //Create Hallway
     Rectangle hallway = new Rectangle(300, 600, 300, 600);
     //SETUP Niner Variables
@@ -50,8 +55,12 @@ public class DTN_1 extends JComponent implements KeyListener {
     boolean[] passedRow = new boolean[5];
     int score = 0;
     Font scoreFont = new Font("Arial", Font.ITALIC, 42);
+    
     //create a random spot in order to take out a spot in the 5 squares
     int spot = (int) (Math.random() * 7);
+    int spot2 = (int) (Math.random() * 7);
+    //Load Images
+    BufferedImage stickFigure = loadImage("player.png");
 
     // drawing of the game happens in here
     // we use the Graphics object, g, to perform the drawing
@@ -71,10 +80,10 @@ public class DTN_1 extends JComponent implements KeyListener {
 
         //Create Main Character
         //Set the colour
-        g.setColor(Color.BLUE);
+        //g.setColor(Color.BLUE);
         //draw rect
-        g.fillRect(player.x, player.y, player.width, player.height);
-
+        //g.fillRect(player.x, player.y, player.width, player.height);
+        g.drawImage(stickFigure,player.x, player.y, player.width, player.height, null);
         //Create hallway
         //set colour
         g.setColor(Color.black);
@@ -94,21 +103,28 @@ public class DTN_1 extends JComponent implements KeyListener {
             }
         }
 
+        for (int i = 0; i < niners2.length; i++) {
+            if (i != spot2) {
+                g.fillRect(niners2[i].x, niners2[i].y, ninerWidth, ninerHeight);
+            }
+        }
 
         // GAME DRAWING ENDS HERE
     }
-
-    public void setNiner(int ninerPosition) {
-        //generate new Y position
-        int ninerY = ninerHeight + 40;
-        //generate the new niner X cooridinate
-        int ninerX = 200;
-     
-        niners[ninerPosition].setBounds(ninerX, ninerY - ninerGap - ninerHeight, ninerWidth, ninerHeight);
-        
-        passedRow[ninerPosition] = false;
-    }
     
+    public BufferedImage loadImage(String filename){
+        BufferedImage img=null;
+        try{
+            File file= new File(filename);
+            img = ImageIO.read(file);
+        }catch(Exception e){
+            //if there is error, print
+            e.printStackTrace();
+        }
+        return img;
+     }
+    
+
     // The main game loop
     // In here is where all the logic for my game will go
     public void run() {
@@ -127,7 +143,11 @@ public class DTN_1 extends JComponent implements KeyListener {
             startX = 201 + (ninerWidth + ninerGap) * i;
             niners[i] = new Rectangle(startX, 150, ninerWidth, ninerHeight);
         }
-        
+
+        for (int i = 0; i < niners2.length; i++) {
+            startX = 201 + (ninerWidth + ninerGap) * i;
+            niners2[i] = new Rectangle(startX, -150, ninerWidth, ninerHeight);
+        }
 
         // the main game loop section
         // game will end if you set done = false;
@@ -160,6 +180,9 @@ public class DTN_1 extends JComponent implements KeyListener {
                 niners[i].y = niners[i].y + speed;
             }
 
+            for (int i = 0; i < niners2.length; i++) {
+                niners2[i].y = niners2[i].y + speed;
+            }
             // did the player hit a niner?
             //go through all niners
             for (int i = 0; i < niners.length; i++) {
@@ -169,8 +192,15 @@ public class DTN_1 extends JComponent implements KeyListener {
                 } else if (player.intersects(niners[spot])) {
                     done = false;
                 }
-
-
+            }
+            //ROW 2
+            for (int i = 0; i < niners2.length; i++) {
+                // did the player hit a niner?
+                if (player.intersects(niners2[i])) {
+                    done = true;
+                } else if (player.intersects(niners2[spot2])) {
+                    done = false;
+                }
 
                 // GAME LOGIC ENDS HERE 
 
