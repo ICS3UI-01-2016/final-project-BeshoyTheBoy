@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -45,6 +46,10 @@ public class DTN_1 extends JComponent implements KeyListener {
     //Create control booleans
     boolean left = false;
     boolean right = false;
+    //for score keeping
+    boolean[] passedRow = new boolean[5];
+    int score = 0;
+    Font scoreFont = new Font("Arial", Font.ITALIC, 42);
     //create a random spot in order to take out a spot in the 5 squares
     int spot = (int) (Math.random() * 7);
 
@@ -93,6 +98,17 @@ public class DTN_1 extends JComponent implements KeyListener {
         // GAME DRAWING ENDS HERE
     }
 
+    public void setNiner(int ninerPosition) {
+        //generate new Y position
+        int ninerY = ninerHeight + 40;
+        //generate the new niner X cooridinate
+        int ninerX = 200;
+     
+        niners[ninerPosition].setBounds(ninerX, ninerY - ninerGap - ninerHeight, ninerWidth, ninerHeight);
+        
+        passedRow[ninerPosition] = false;
+    }
+    
     // The main game loop
     // In here is where all the logic for my game will go
     public void run() {
@@ -111,6 +127,7 @@ public class DTN_1 extends JComponent implements KeyListener {
             startX = 201 + (ninerWidth + ninerGap) * i;
             niners[i] = new Rectangle(startX, 150, ninerWidth, ninerHeight);
         }
+        
 
         // the main game loop section
         // game will end if you set done = false;
@@ -137,33 +154,47 @@ public class DTN_1 extends JComponent implements KeyListener {
             if (player.x <= 200) {
                 player.x = 200;
             }
-            
+
             //Make level scroll by duping niners and moving them down
             for (int i = 0; i < niners.length; i++) {
                 niners[i].y = niners[i].y + speed;
             }
-            // GAME LOGIC ENDS HERE 
 
-
-            // update the drawing (calls paintComponent)
-
-            repaint();
-
-
-
-            // SLOWS DOWN THE GAME BASED ON THE FRAMERATE ABOVE
-            // USING SOME SIMPLE MATH
-            deltaTime = System.currentTimeMillis() - startTime;
-            try {
-                if (deltaTime > desiredTime) {
-                    //took too much time, don't wait
-                    Thread.sleep(1);
-                } else {
-                    // sleep to make up the extra time
-                    Thread.sleep(desiredTime - deltaTime);
+            // did the player hit a niner?
+            //go through all niners
+            for (int i = 0; i < niners.length; i++) {
+                // did the player hit a niner?
+                if (player.intersects(niners[i])) {
+                    done = true;
+                } else if (player.intersects(niners[spot])) {
+                    done = false;
                 }
-            } catch (Exception e) {
-            };
+
+
+
+                // GAME LOGIC ENDS HERE 
+
+
+                // update the drawing (calls paintComponent)
+
+                repaint();
+
+
+
+                // SLOWS DOWN THE GAME BASED ON THE FRAMERATE ABOVE
+                // USING SOME SIMPLE MATH
+                deltaTime = System.currentTimeMillis() - startTime;
+                try {
+                    if (deltaTime > desiredTime) {
+                        //took too much time, don't wait
+                        Thread.sleep(1);
+                    } else {
+                        // sleep to make up the extra time
+                        Thread.sleep(desiredTime - deltaTime);
+                    }
+                } catch (Exception e) {
+                };
+            }
         }
     }
 
