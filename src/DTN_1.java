@@ -31,10 +31,15 @@ public class DTN_1 extends JComponent implements KeyListener {
     Color floorColor = new Color(204, 204, 204);
     //Create Main Player
     Rectangle player = new Rectangle(382, 500, 35, 55);
-    //Create 4 niners in 1 array (row)
+    //CREATE 4 ARRAYS OF BLOCKS
+    //ARRAY 1
     Rectangle[] niners = new Rectangle[7];
-    //Create a vertical array to store niner arrays
+    //ARRAY 2
     Rectangle[] niners2 = new Rectangle[7];
+    //ARRAY 3
+    Rectangle[] niners3 = new Rectangle[7];
+    //ARRAY 4
+    Rectangle[] niners4 = new Rectangle[7];
     //Create Hallway
     Rectangle hallway = new Rectangle(300, 600, 300, 600);
     //SETUP Niner Variables
@@ -55,10 +60,12 @@ public class DTN_1 extends JComponent implements KeyListener {
     boolean[] passedRow = new boolean[5];
     int score = 0;
     Font scoreFont = new Font("Arial", Font.ITALIC, 42);
-    
-    //create a random spot in order to take out a spot in the 5 squares
+
+    //create a random spot in order to take out a spot in the 5 squares, For every array
     int spot = (int) (Math.random() * 7);
     int spot2 = (int) (Math.random() * 7);
+    int spot3 = (int) (Math.random() * 7);
+    int spot4 = (int) (Math.random() * 7);
     //Load Images
     BufferedImage stickFigure = loadImage("player.png");
 
@@ -71,7 +78,6 @@ public class DTN_1 extends JComponent implements KeyListener {
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE 
-
         //Create background
         //Change colour
         g.setColor(Color.lightGray);
@@ -83,7 +89,7 @@ public class DTN_1 extends JComponent implements KeyListener {
         //g.setColor(Color.BLUE);
         //draw rect
         //g.fillRect(player.x, player.y, player.width, player.height);
-        g.drawImage(stickFigure,player.x, player.y, player.width, player.height, null);
+        g.drawImage(stickFigure, player.x, player.y, player.width, player.height, null);
         //Create hallway
         //set colour
         g.setColor(Color.black);
@@ -96,7 +102,7 @@ public class DTN_1 extends JComponent implements KeyListener {
 
         //Create niners
         g.setColor(Color.red);
-        //create for loop to generate niners
+        //create for loop to generate niners for every Array
         for (int i = 0; i < niners.length; i++) {
             if (i != spot) {
                 g.fillRect(niners[i].x, niners[i].y, ninerWidth, ninerHeight);
@@ -108,22 +114,32 @@ public class DTN_1 extends JComponent implements KeyListener {
                 g.fillRect(niners2[i].x, niners2[i].y, ninerWidth, ninerHeight);
             }
         }
-
+        
+        for (int i = 0; i < niners3.length; i++) {
+            if (i != spot3) {
+                g.fillRect(niners3[i].x, niners3[i].y, ninerWidth, ninerHeight);
+            }
+        }
+        
+        for (int i = 0; i < niners4.length; i++) {
+            if (i != spot4) {
+                g.fillRect(niners4[i].x, niners4[i].y, ninerWidth, ninerHeight);
+            }
+        }
         // GAME DRAWING ENDS HERE
     }
-    
-    public BufferedImage loadImage(String filename){
-        BufferedImage img=null;
-        try{
-            File file= new File(filename);
+
+    public BufferedImage loadImage(String filename) {
+        BufferedImage img = null;
+        try {
+            File file = new File(filename);
             img = ImageIO.read(file);
-        }catch(Exception e){
+        } catch (Exception e) {
             //if there is error, print
             e.printStackTrace();
         }
         return img;
-     }
-    
+    }
 
     // The main game loop
     // In here is where all the logic for my game will go
@@ -132,8 +148,6 @@ public class DTN_1 extends JComponent implements KeyListener {
         // This is used to limit the framerate later on
         long startTime;
         long deltaTime;
-
-
 
         //create an X variable to create the first niner
         int startX = 201;
@@ -147,6 +161,16 @@ public class DTN_1 extends JComponent implements KeyListener {
         for (int i = 0; i < niners2.length; i++) {
             startX = 201 + (ninerWidth + ninerGap) * i;
             niners2[i] = new Rectangle(startX, -150, ninerWidth, ninerHeight);
+        }
+        
+        for (int i = 0; i < niners3.length; i++) {
+            startX = 201 + (ninerWidth + ninerGap) * i;
+            niners3[i] = new Rectangle(startX, -450, ninerWidth, ninerHeight);
+        }
+        
+        for (int i = 0; i < niners4.length; i++) {
+            startX = 201 + (ninerWidth + ninerGap) * i;
+            niners4[i] = new Rectangle(startX, -750, ninerWidth, ninerHeight);
         }
 
         // the main game loop section
@@ -183,8 +207,17 @@ public class DTN_1 extends JComponent implements KeyListener {
             for (int i = 0; i < niners2.length; i++) {
                 niners2[i].y = niners2[i].y + speed;
             }
+            
+            for (int i = 0; i < niners3.length; i++) {
+                niners3[i].y = niners3[i].y + speed;
+            }
+            
+            for (int i = 0; i < niners4.length; i++) {
+                niners4[i].y = niners4[i].y + speed;
+            }
             // did the player hit a niner?
             //go through all niners
+            //ROW 1
             for (int i = 0; i < niners.length; i++) {
                 // did the player hit a niner?
                 if (player.intersects(niners[i])) {
@@ -201,15 +234,28 @@ public class DTN_1 extends JComponent implements KeyListener {
                 } else if (player.intersects(niners2[spot2])) {
                     done = false;
                 }
-
+            }
+            //ROW 3
+            for (int i = 0; i < niners3.length; i++) {
+                // did the player hit a niner?
+                if (player.intersects(niners3[i])) {
+                    done = true;
+                } else if (player.intersects(niners3[spot3])) {
+                    done = false;
+                }
+            }
+            //ROW 4
+            for (int i = 0; i < niners4.length; i++) {
+                // did the player hit a niner?
+                if (player.intersects(niners4[i])) {
+                    done = true;
+                } else if (player.intersects(niners4[spot4])) {
+                    done = false;
+                }
+            }
                 // GAME LOGIC ENDS HERE 
-
-
                 // update the drawing (calls paintComponent)
-
                 repaint();
-
-
 
                 // SLOWS DOWN THE GAME BASED ON THE FRAMERATE ABOVE
                 // USING SOME SIMPLE MATH
@@ -226,7 +272,7 @@ public class DTN_1 extends JComponent implements KeyListener {
                 };
             }
         }
-    }
+    
 
     /**
      * @param args the command line arguments
