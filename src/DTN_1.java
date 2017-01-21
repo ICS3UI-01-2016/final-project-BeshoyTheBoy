@@ -40,8 +40,6 @@ public class DTN_1 extends JComponent implements KeyListener {
     Rectangle[] niners3 = new Rectangle[7];
     //ARRAY 4
     Rectangle[] niners4 = new Rectangle[7];
-    //Create Hallway
-    Rectangle hallway = new Rectangle(300, 600, 300, 600);
     //SETUP Niner Variables
     //Space between each niner
     int ninerGap = 25;
@@ -68,7 +66,7 @@ public class DTN_1 extends JComponent implements KeyListener {
     int spot4 = (int) (Math.random() * 7);
     //Load Images
     BufferedImage stickFigure = loadImage("player.png");
-
+    BufferedImage ninersPNG = loadImage("Niner.png");
     // drawing of the game happens in here
     // we use the Graphics object, g, to perform the drawing
     // NOTE: This is already double buffered!(helps with framerate/speed)
@@ -101,29 +99,33 @@ public class DTN_1 extends JComponent implements KeyListener {
         g.drawLine(600, 0, 600, 600);
 
         //Create niners
-        g.setColor(Color.red);
+        //g.setColor(Color.red);
         //create for loop to generate niners for every Array
         for (int i = 0; i < niners.length; i++) {
             if (i != spot) {
-                g.fillRect(niners[i].x, niners[i].y, ninerWidth, ninerHeight);
+                //g.fillRect(niners[i].x, niners[i].y, ninerWidth, ninerHeight);
+            g.drawImage(ninersPNG,niners[i].x, niners[i].y, ninerWidth, ninerHeight, null);
             }
         }
 
         for (int i = 0; i < niners2.length; i++) {
             if (i != spot2) {
-                g.fillRect(niners2[i].x, niners2[i].y, ninerWidth, ninerHeight);
+                //g.fillRect(niners2[i].x, niners2[i].y, ninerWidth, ninerHeight);
+                g.drawImage(ninersPNG,niners2[i].x, niners2[i].y, ninerWidth, ninerHeight, null);
             }
         }
-        
+
         for (int i = 0; i < niners3.length; i++) {
             if (i != spot3) {
-                g.fillRect(niners3[i].x, niners3[i].y, ninerWidth, ninerHeight);
+                //g.fillRect(niners3[i].x, niners3[i].y, ninerWidth, ninerHeight);
+                g.drawImage(ninersPNG,niners3[i].x, niners3[i].y, ninerWidth, ninerHeight, null);
             }
         }
-        
+
         for (int i = 0; i < niners4.length; i++) {
             if (i != spot4) {
-                g.fillRect(niners4[i].x, niners4[i].y, ninerWidth, ninerHeight);
+                //g.fillRect(niners4[i].x, niners4[i].y, ninerWidth, ninerHeight);
+            g.drawImage(ninersPNG,niners4[i].x, niners4[i].y, ninerWidth, ninerHeight, null);
             }
         }
         // GAME DRAWING ENDS HERE
@@ -162,12 +164,12 @@ public class DTN_1 extends JComponent implements KeyListener {
             startX = 201 + (ninerWidth + ninerGap) * i;
             niners2[i] = new Rectangle(startX, -150, ninerWidth, ninerHeight);
         }
-        
+
         for (int i = 0; i < niners3.length; i++) {
             startX = 201 + (ninerWidth + ninerGap) * i;
             niners3[i] = new Rectangle(startX, -450, ninerWidth, ninerHeight);
         }
-        
+
         for (int i = 0; i < niners4.length; i++) {
             startX = 201 + (ninerWidth + ninerGap) * i;
             niners4[i] = new Rectangle(startX, -750, ninerWidth, ninerHeight);
@@ -207,14 +209,15 @@ public class DTN_1 extends JComponent implements KeyListener {
             for (int i = 0; i < niners2.length; i++) {
                 niners2[i].y = niners2[i].y + speed;
             }
-            
+
             for (int i = 0; i < niners3.length; i++) {
                 niners3[i].y = niners3[i].y + speed;
             }
-            
+
             for (int i = 0; i < niners4.length; i++) {
                 niners4[i].y = niners4[i].y + speed;
             }
+
             // did the player hit a niner?
             //go through all niners
             //ROW 1
@@ -253,26 +256,25 @@ public class DTN_1 extends JComponent implements KeyListener {
                     done = false;
                 }
             }
-                // GAME LOGIC ENDS HERE 
-                // update the drawing (calls paintComponent)
-                repaint();
+            // GAME LOGIC ENDS HERE 
+            // update the drawing (calls paintComponent)
+            repaint();
 
-                // SLOWS DOWN THE GAME BASED ON THE FRAMERATE ABOVE
-                // USING SOME SIMPLE MATH
-                deltaTime = System.currentTimeMillis() - startTime;
-                try {
-                    if (deltaTime > desiredTime) {
-                        //took too much time, don't wait
-                        Thread.sleep(1);
-                    } else {
-                        // sleep to make up the extra time
-                        Thread.sleep(desiredTime - deltaTime);
-                    }
-                } catch (Exception e) {
-                };
-            }
+            // SLOWS DOWN THE GAME BASED ON THE FRAMERATE ABOVE
+            // USING SOME SIMPLE MATH
+            deltaTime = System.currentTimeMillis() - startTime;
+            try {
+                if (deltaTime > desiredTime) {
+                    //took too much time, don't wait
+                    Thread.sleep(1);
+                } else {
+                    // sleep to make up the extra time
+                    Thread.sleep(desiredTime - deltaTime);
+                }
+            } catch (Exception e) {
+            };
         }
-    
+    }
 
     /**
      * @param args the command line arguments
