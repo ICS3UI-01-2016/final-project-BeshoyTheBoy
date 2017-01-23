@@ -97,7 +97,11 @@ public class DTN_1 extends JComponent implements KeyListener {
         g.setColor(Color.black);
         //draw line
         g.drawLine(600, 0, 600, 600);
-
+        //score
+        g.setColor(Color.white);
+        g.setFont(scoreFont);
+        g.drawString("" + score, WIDTH-100, 570);
+        
         //Create niners
         //g.setColor(Color.red);
         //create for loop to generate niners for every Array
