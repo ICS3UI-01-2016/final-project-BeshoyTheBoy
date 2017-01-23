@@ -142,6 +142,7 @@ public class DTN_1 extends JComponent implements KeyListener {
         }
         return img;
     }
+    
 
     // The main game loop
     // In here is where all the logic for my game will go
@@ -204,18 +205,30 @@ public class DTN_1 extends JComponent implements KeyListener {
             //Make level scroll by duping niners and moving them down
             for (int i = 0; i < niners.length; i++) {
                 niners[i].y = niners[i].y + speed;
+                if (niners[i].y == 800){
+                    niners[i].y = niners4[i].y - 300;
+                }
             }
 
             for (int i = 0; i < niners2.length; i++) {
                 niners2[i].y = niners2[i].y + speed;
+                 if (niners2[i].y == 800){
+                    niners2[i].y = niners[i].y - 300;
+                }
             }
 
             for (int i = 0; i < niners3.length; i++) {
                 niners3[i].y = niners3[i].y + speed;
+                 if (niners3[i].y == 800){
+                    niners3[i].y = niners2[i].y - 300;
+                }
             }
 
             for (int i = 0; i < niners4.length; i++) {
                 niners4[i].y = niners4[i].y + speed;
+                 if (niners4[i].y == 800){
+                    niners4[i].y = niners3[i].y - 300;
+                }
             }
 
             // did the player hit a niner?
@@ -256,6 +269,8 @@ public class DTN_1 extends JComponent implements KeyListener {
                     done = false;
                 }
             }
+            
+            
             // GAME LOGIC ENDS HERE 
             // update the drawing (calls paintComponent)
             repaint();
