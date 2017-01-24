@@ -58,18 +58,18 @@ public class DTN_1 extends JComponent implements KeyListener {
     boolean[] passedRow = new boolean[5];
     int score = 0;
     Font scoreFont = new Font("Arial", Font.ITALIC, 42);
-
     //create a random spot in order to take out a spot in the 5 squares, For every array
-    int spot = (int) (Math.random() * 7);
-    int spot2 = (int) (Math.random() * 7);
-    int spot3 = (int) (Math.random() * 7);
-    int spot4 = (int) (Math.random() * 7);
+    int spot = (int) (Math.random() * 6);
+    int spot2 = (int) (Math.random() * 6);
+    int spot3 = (int) (Math.random() * 6);
+    int spot4 = (int) (Math.random() * 6);
     //Load Images
     BufferedImage stickFigure = loadImage("player.png");
     BufferedImage ninersPNG = loadImage("Niner.png");
     // drawing of the game happens in here
     // we use the Graphics object, g, to perform the drawing
     // NOTE: This is already double buffered!(helps with framerate/speed)
+
     @Override
     public void paintComponent(Graphics g) {
         // always clear the screen first!
@@ -100,36 +100,36 @@ public class DTN_1 extends JComponent implements KeyListener {
         //score
         g.setColor(Color.white);
         g.setFont(scoreFont);
-        g.drawString("" + score, WIDTH-100, 570);
-        
+        g.drawString("" + score / 60, WIDTH - 170, 570);
+
         //Create niners
         //g.setColor(Color.red);
         //create for loop to generate niners for every Array
         for (int i = 0; i < niners.length; i++) {
             if (i != spot) {
                 //g.fillRect(niners[i].x, niners[i].y, ninerWidth, ninerHeight);
-            g.drawImage(ninersPNG,niners[i].x, niners[i].y, ninerWidth, ninerHeight, null);
+                g.drawImage(ninersPNG, niners[i].x, niners[i].y, ninerWidth, ninerHeight, null);
             }
         }
 
         for (int i = 0; i < niners2.length; i++) {
             if (i != spot2) {
                 //g.fillRect(niners2[i].x, niners2[i].y, ninerWidth, ninerHeight);
-                g.drawImage(ninersPNG,niners2[i].x, niners2[i].y, ninerWidth, ninerHeight, null);
+                g.drawImage(ninersPNG, niners2[i].x, niners2[i].y, ninerWidth, ninerHeight, null);
             }
         }
 
         for (int i = 0; i < niners3.length; i++) {
             if (i != spot3) {
                 //g.fillRect(niners3[i].x, niners3[i].y, ninerWidth, ninerHeight);
-                g.drawImage(ninersPNG,niners3[i].x, niners3[i].y, ninerWidth, ninerHeight, null);
+                g.drawImage(ninersPNG, niners3[i].x, niners3[i].y, ninerWidth, ninerHeight, null);
             }
         }
 
         for (int i = 0; i < niners4.length; i++) {
             if (i != spot4) {
                 //g.fillRect(niners4[i].x, niners4[i].y, ninerWidth, ninerHeight);
-            g.drawImage(ninersPNG,niners4[i].x, niners4[i].y, ninerWidth, ninerHeight, null);
+                g.drawImage(ninersPNG, niners4[i].x, niners4[i].y, ninerWidth, ninerHeight, null);
             }
         }
         // GAME DRAWING ENDS HERE
@@ -146,7 +146,6 @@ public class DTN_1 extends JComponent implements KeyListener {
         }
         return img;
     }
-    
 
     // The main game loop
     // In here is where all the logic for my game will go
@@ -206,31 +205,36 @@ public class DTN_1 extends JComponent implements KeyListener {
                 player.x = 200;
             }
 
+            //SCORE
+            for (int i = 0; i < niners.length; i++) {
+                score++;
+            }
+
             //Make level scroll by duping niners and moving them down
             for (int i = 0; i < niners.length; i++) {
                 niners[i].y = niners[i].y + speed;
-                if (niners[i].y == 800){
+                if (niners[i].y == 800) {
                     niners[i].y = niners4[i].y - 300;
                 }
             }
 
             for (int i = 0; i < niners2.length; i++) {
                 niners2[i].y = niners2[i].y + speed;
-                 if (niners2[i].y == 800){
+                if (niners2[i].y == 800) {
                     niners2[i].y = niners[i].y - 300;
                 }
             }
 
             for (int i = 0; i < niners3.length; i++) {
                 niners3[i].y = niners3[i].y + speed;
-                 if (niners3[i].y == 800){
+                if (niners3[i].y == 800) {
                     niners3[i].y = niners2[i].y - 300;
                 }
             }
 
             for (int i = 0; i < niners4.length; i++) {
                 niners4[i].y = niners4[i].y + speed;
-                 if (niners4[i].y == 800){
+                if (niners4[i].y == 800) {
                     niners4[i].y = niners3[i].y - 300;
                 }
             }
@@ -273,8 +277,8 @@ public class DTN_1 extends JComponent implements KeyListener {
                     done = false;
                 }
             }
-            
-            
+
+
             // GAME LOGIC ENDS HERE 
             // update the drawing (calls paintComponent)
             repaint();
